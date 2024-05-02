@@ -13,15 +13,15 @@ export const metadata: Metadata = {
 const navItems = [
   {
     name: "Find Doctor",
-    link: "/",
+    link: "#findDoc",
   },
   {
     name: "Reports",
-    link: "/reports",
+    link: "#reports",
   },
   {
     name: "Serivces",
-    link: "/serivces",
+    link: "#serivces",
   },
 ];
 
@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className="scroll-smooth" lang="en">
       <body className={inter.className}>
         <FloatingNav navItems={navItems} />
         {children}

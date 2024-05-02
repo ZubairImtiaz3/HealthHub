@@ -3,7 +3,10 @@ import { Button } from "@/components/ui/button";
 
 const ViewReports = () => {
   return (
-    <section className="w-full bg-gray-100 py-12 md:py-24 lg:py-32 dark:bg-gray-800">
+    <section
+      id="reports"
+      className="w-full bg-gray-100 py-12 md:py-24 lg:py-32 dark:bg-gray-800"
+    >
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="flex items-center justify-center">
