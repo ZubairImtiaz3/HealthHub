@@ -21,7 +21,7 @@ const navItems = [
   },
   {
     name: "Serivces",
-    link: "#serivces",
+    link: "#services",
   },
 ];
 

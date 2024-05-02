@@ -20,7 +20,7 @@ export const FloatingNav = ({
   const [visible, setVisible] = useState(true);
   const [prevScrollY, setPrevScrollY] = useState(0);
 
-  scrollY.onChange((current) => {
+  scrollY.on("change", (current) => {
     const shouldHide = current > 50 && current > prevScrollY;
     setVisible(!shouldHide);
     setPrevScrollY(current);
