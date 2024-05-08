@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import { AnimatedTooltip } from "@/components/ui/animated-tooltip";
 
 export default function Hero() {

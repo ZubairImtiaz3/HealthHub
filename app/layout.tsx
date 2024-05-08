@@ -24,6 +24,10 @@ const navItems = [
     name: "Serivces",
     link: "#services",
   },
+  {
+    name: "Mission",
+    link: "#mission",
+  },
 ];
 
 export default function RootLayout({
