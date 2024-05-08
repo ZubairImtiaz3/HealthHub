@@ -1,11 +1,15 @@
+import { AuthTemplate } from "@/components/auth/AuthTemplate";
 import { ForgotPassForm } from "@/components/auth/ForgotPassForm";
-import React from "react";
 
 const page = () => {
   return (
-    <div className="flex justify-center items-center h-[100vh]">
+    <AuthTemplate
+      title="Forgot Password?"
+      description="Enter your email below to reset your password"
+      imgOrder="left"
+    >
       <ForgotPassForm />
-    </div>
+    </AuthTemplate>
   );
 };
 
