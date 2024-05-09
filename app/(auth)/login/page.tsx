@@ -6,6 +6,7 @@ const page = () => {
     <AuthTemplate
       title="Login"
       description="Enter your credentials below to login to your account"
+      imgOrder="right"
     >
       <LoginForm />
     </AuthTemplate>
