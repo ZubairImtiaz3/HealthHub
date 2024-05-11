@@ -60,46 +60,73 @@ export function LoginForm() {
     setIsLoading(false);
   };
 
+  async function signInWithGoogle() {
+    toast({
+      title: "Please Wait...",
+      description: "Logging in with Google",
+    });
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${process.env.NEXT_PUBLIC_APP_ORIGIN}/google-auth`,
+      },
+    });
+
+    if (error) {
+      toast({
+        title: "Something Went Wrong.",
+        description: error.message,
+      });
+    }
+  }
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
-      <div className="grid gap-2">
-        <Label htmlFor="email">Email</Label>
-        <Input
-          id="email"
-          type="email"
-          placeholder="m@example.com"
-          {...register("email")}
-        />
-        {errors.email && (
-          <span className="text-red-500 text-sm">{errors.email.message}</span>
-        )}
-      </div>
-      <div className="grid gap-2">
-        <div className="flex items-center">
-          <Label htmlFor="password">Password</Label>
-          <Link
-            href="/forgot-password"
-            className="ml-auto inline-block text-sm underline"
-          >
-            Forgot your password?
-          </Link>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)} className="grid gap-4">
+        <div className="grid gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input
+            id="email"
+            type="email"
+            placeholder="m@example.com"
+            {...register("email")}
+          />
+          {errors.email && (
+            <span className="text-red-500 text-sm">{errors.email.message}</span>
+          )}
         </div>
-        <Input id="password" type="password" {...register("password")} />
-        {errors.password && (
-          <span className="text-red-500 text-sm">
-            {errors.password.message}
-          </span>
-        )}
-      </div>
-      <Button disabled={isLoading}>
+        <div className="grid gap-2">
+          <div className="flex items-center">
+            <Label htmlFor="password">Password</Label>
+            <Link
+              href="/forgot-password"
+              className="ml-auto inline-block text-sm underline"
+            >
+              Forgot your password?
+            </Link>
+          </div>
+          <Input id="password" type="password" {...register("password")} />
+          {errors.password && (
+            <span className="text-red-500 text-sm">
+              {errors.password.message}
+            </span>
+          )}
+        </div>
+        <Button disabled={isLoading}>
+          {isLoading ? (
+            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            "Sign In"
+          )}
+        </Button>
+      </form>
+      <Button onClick={signInWithGoogle} variant="outline" className="w-full">
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
-          "Sign In"
+          "Login with Google"
         )}
-      </Button>
-      <Button variant="outline" className="w-full">
-        Login with Google
       </Button>
       <div className="mt-4 text-center text-sm">
         Don&apos;t have an account?{" "}
@@ -107,6 +134,6 @@ export function LoginForm() {
           Sign up
         </Link>
       </div>
-    </form>
+    </>
   );
 }
