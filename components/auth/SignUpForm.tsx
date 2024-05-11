@@ -14,6 +14,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { createClient } from "@/utils/supabase/client";
+import { SignUpSubmit } from "@/actions/signUp";
+
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
@@ -25,7 +28,20 @@ const schema = yup.object().shape({
   password: yup.string().required("Password is required"),
 });
 
+interface FormData {
+  firstName: string;
+  lastName: string;
+  fatherOrHusbandName: string;
+  gender: string;
+  mobileNumber: string;
+  email: string;
+  dateOfBirth: Date;
+  password: string;
+}
+
 export function SignUpForm() {
+  const supabase = createClient();
+
   const {
     register,
     handleSubmit,
@@ -37,12 +53,29 @@ export function SignUpForm() {
 
   const handleValueChange = (value: string) => {
     setValue("gender", value);
-    console.log("Value changed to: ", value);
   };
 
-  const onSubmit = (data: any) => {
-    // Handle form submission
-    console.log(data);
+  const onSubmit = async (data: FormData) => {
+    const { error } = await supabase.auth.signUp({
+      email: data?.email,
+      password: data?.password,
+      // options: {
+      //   emailRedirectTo: "http://localhost:3000/signup/confirm",
+      // },
+    });
+
+    if (!error) {
+      const { error } = await SignUpSubmit({
+        first_name: data?.firstName,
+        last_name: data?.lastName,
+        father_husband_name: data?.fatherOrHusbandName,
+        gender: data?.gender,
+        phone_number: data?.mobileNumber,
+        date_of_birth: data?.dateOfBirth,
+      });
+
+      console.log("errorProfile", error);
+    }
   };
 
   return (
