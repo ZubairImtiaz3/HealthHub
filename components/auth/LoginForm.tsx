@@ -122,11 +122,7 @@ export function LoginForm() {
         </Button>
       </form>
       <Button onClick={signInWithGoogle} variant="outline" className="w-full">
-        {isLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          "Login with Google"
-        )}
+        Login with Google
       </Button>
       <div className="mt-4 text-center text-sm">
         Don&apos;t have an account?{" "}

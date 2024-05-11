@@ -7,20 +7,20 @@ const cookieStore = cookies();
 const supabase = createClient(cookieStore);
 
 export const SignUpSubmit = async (SignUpData: SignUpProfile) => {
-    // Get authenticated user
-    const {
-        data: { user },
-    } = await supabase.auth.getUser();
+  // Get authenticated user
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-    const { data, error } = await supabase
-        .from("profiles")
-        .upsert([
-            {
-                id: user?.id,
-                ...SignUpData,
-            },
-        ])
-        .select();
+  const { data, error } = await supabase
+    .from("profiles")
+    .upsert([
+      {
+        id: user?.id,
+        ...SignUpData,
+      },
+    ])
+    .select();
 
-    return { data, error };
+  return { data, error };
 };

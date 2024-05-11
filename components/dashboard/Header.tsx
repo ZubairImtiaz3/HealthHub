@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -30,8 +31,35 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import signOut from "@/actions/signOut";
+import { toast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    try {
+      const response = await signOut();
+      if (response?.error === null) {
+        toast({
+          variant: "default",
+          title: "Successfully logged out.",
+          description: "Feel free to come back later.",
+        });
+        router.push("/");
+      } else {
+        toast({
+          variant: "default",
+          title: response?.error,
+          description: "An unexpected error occurred during sign-out.",
+        });
+      }
+    } catch (error) {
+      console.error("An unexpected error occurred during sign-out:", error);
+    }
+  };
+
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
       <Sheet>
@@ -137,7 +165,7 @@ const Header = () => {
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
+          <DropdownMenuItem onClick={handleSignOut}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </header>
