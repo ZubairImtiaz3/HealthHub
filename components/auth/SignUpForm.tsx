@@ -87,16 +87,15 @@ export function SignUpForm() {
       if (signUpError || profileError) {
         toast({
           title: "Something Went Wrong.",
-          description: "Sorry, Please try again in a while",
+          description: signUpError?.message || profileError?.message,
         });
+      } else {
+        toast({
+          title: "Account Register Successfully.",
+          description: "Redirecting to your Dashboard",
+        });
+        router.push("/user-panel");
       }
-
-      toast({
-        title: "Account Register Successfully.",
-        description: "Redirecting to your Dashboard",
-      });
-
-      router.push("/user-panel");
 
       setIsLoading(false);
     } catch (error) {
@@ -208,7 +207,7 @@ export function SignUpForm() {
         {isLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
-          "Sign In"
+          "Sign Up"
         )}
       </Button>
       <div className="mt-4 text-center text-sm">

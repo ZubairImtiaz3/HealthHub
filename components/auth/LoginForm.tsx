@@ -8,6 +8,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import { createClient } from "@/utils/supabase/client";
+import { toast } from "@/components/ui/use-toast";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Icons } from "@/components/ui/icons";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -21,6 +25,9 @@ interface FormData {
 
 export function LoginForm() {
   const supabase = createClient();
+  const router = useRouter();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -31,12 +38,26 @@ export function LoginForm() {
   });
 
   const onSubmit = async (data: FormData) => {
-    const { data: response, error } = await supabase.auth.signInWithPassword({
+    setIsLoading(true);
+
+    const { error } = await supabase.auth.signInWithPassword({
       email: data?.email,
       password: data?.password,
     });
 
-    console.log(error);
+    if (!error) {
+      toast({
+        title: "Login Successfully.",
+        description: "Redirecting to your Dashboard",
+      });
+      router.push("/user-panel");
+    } else {
+      toast({
+        title: "Something Went Wrong.",
+        description: error.message,
+      });
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -70,8 +91,12 @@ export function LoginForm() {
           </span>
         )}
       </div>
-      <Button type="submit" className="w-full">
-        Login
+      <Button disabled={isLoading}>
+        {isLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          "Sign In"
+        )}
       </Button>
       <Button variant="outline" className="w-full">
         Login with Google
