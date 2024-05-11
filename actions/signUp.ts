@@ -1,7 +1,6 @@
 "use server";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { SignUpProfile } from "@/types/auth";
 
 const cookieStore = cookies();
@@ -22,10 +21,6 @@ export const SignUpSubmit = async (SignUpData: SignUpProfile) => {
             },
         ])
         .select();
-
-    if (!error) {
-        redirect("/user-panel");
-    }
 
     return { data, error };
 };

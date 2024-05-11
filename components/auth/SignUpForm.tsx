@@ -13,9 +13,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 import { createClient } from "@/utils/supabase/client";
 import { SignUpSubmit } from "@/actions/signUp";
+import { useState } from "react";
+import { Icons } from "@/components/ui/icons";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
@@ -40,7 +44,11 @@ interface FormData {
 }
 
 export function SignUpForm() {
+  const { toast } = useToast();
+  const router = useRouter();
   const supabase = createClient();
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -56,16 +64,18 @@ export function SignUpForm() {
   };
 
   const onSubmit = async (data: FormData) => {
-    const { error } = await supabase.auth.signUp({
-      email: data?.email,
-      password: data?.password,
-      // options: {
-      //   emailRedirectTo: "http://localhost:3000/signup/confirm",
-      // },
-    });
+    setIsLoading(true);
 
-    if (!error) {
-      const { error } = await SignUpSubmit({
+    try {
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: data?.email,
+        password: data?.password,
+        // options: {
+        //   emailRedirectTo: "http://localhost:3000/signup/confirm",
+        // },
+      });
+
+      const { error: profileError } = await SignUpSubmit({
         first_name: data?.firstName,
         last_name: data?.lastName,
         father_husband_name: data?.fatherOrHusbandName,
@@ -74,7 +84,23 @@ export function SignUpForm() {
         date_of_birth: data?.dateOfBirth,
       });
 
-      console.log("errorProfile", error);
+      if (signUpError || profileError) {
+        toast({
+          title: "Something Went Wrong.",
+          description: "Sorry, Please try again in a while",
+        });
+      }
+
+      toast({
+        title: "Account Register Successfully.",
+        description: "Redirecting to your Dashboard",
+      });
+
+      router.push("/user-panel");
+
+      setIsLoading(false);
+    } catch (error) {
+      console.log("error", error);
     }
   };
 
@@ -178,8 +204,12 @@ export function SignUpForm() {
           </span>
         )}
       </div>
-      <Button type="submit" className="w-full">
-        Create an account
+      <Button disabled={isLoading}>
+        {isLoading ? (
+          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          "Sign In"
+        )}
       </Button>
       <div className="mt-4 text-center text-sm">
         Already have an account?{" "}
