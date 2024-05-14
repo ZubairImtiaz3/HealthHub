@@ -1,4 +1,6 @@
 import Image from "next/image";
+import { checkAuth } from "@/utils/supabase/session";
+import { redirect } from "next/navigation";
 
 interface Props {
   title: string;
@@ -7,12 +9,17 @@ interface Props {
   children: React.ReactNode;
 }
 
-export function AuthTemplate({
+export async function AuthTemplate({
   title,
   description,
   imgOrder,
   children,
 }: Props) {
+  const session = await checkAuth();
+  if (session?.access_token) {
+    redirect("/user-panel");
+  }
+
   const imageOrderClass = imgOrder === "left" ? "order-1" : "order-2";
   const contentOrderClass = imgOrder === "left" ? "order-2" : "order-1";
 
