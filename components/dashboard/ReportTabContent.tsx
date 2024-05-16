@@ -6,9 +6,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
-const TabContent = () => {
+const ReportTabContent = () => {
   const Data = [
     {
       id: 1,
@@ -22,7 +22,7 @@ const TabContent = () => {
     },
     {
       id: 3,
-      title: "Eye Examination",
+      title: "Dubai Examination",
       date: "July 20, 2023",
     },
   ];
@@ -31,9 +31,9 @@ const TabContent = () => {
     <TabsContent value="week">
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="px-7">
-          <CardTitle>Medical Reports</CardTitle>
+          <CardTitle>Reports</CardTitle>
           <CardDescription>
-            You can view all available reports here.
+            You can view all reports of name here.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -62,4 +62,4 @@ const TabContent = () => {
   );
 };
 
-export default TabContent;
+export default ReportTabContent;

@@ -1,10 +1,11 @@
 import { File } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PatientTabContent from "@/components/dashboard/PatientTabContent";
 import RightSide from "@/components/dashboard/RightSide";
+import ReportTabContent from "@/components/dashboard/ReportTabContent";
 
-export default function page() {
+const page = async ({ params }: { params: { id: string } }) => {
+  console.log(params.id);
   return (
     <>
       <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -22,7 +23,7 @@ export default function page() {
               </Button>
             </div>
           </div>
-          <PatientTabContent />
+          <ReportTabContent />
         </Tabs>
       </div>
       <div>
@@ -30,4 +31,6 @@ export default function page() {
       </div>
     </>
   );
-}
+};
+
+export default page;
