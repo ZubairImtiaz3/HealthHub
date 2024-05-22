@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import ViewReportsBtn from "@/components/dashboard/ViewReportsBtn";
 
 const PatientTabContent = async () => {
   const cookieStore = cookies();
@@ -45,9 +45,7 @@ const PatientTabContent = async () => {
                         {new Date(patient.created_at).toLocaleDateString()}
                       </p>
                     </div>
-                    <Button size="sm" variant="outline">
-                      View Reports
-                    </Button>
+                    <ViewReportsBtn id={patient.id} />
                   </CardHeader>
                 </Card>
               </div>

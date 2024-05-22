@@ -4,8 +4,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RightSide from "@/components/dashboard/RightSide";
 import ReportTabContent from "@/components/dashboard/ReportTabContent";
 
-const page = async ({ params }: { params: { id: string } }) => {
-  console.log(params.id);
+const page = ({ params }: { params: { id: string } }) => {
   return (
     <>
       <div className="grid auto-rows-max items-start gap-4 md:gap-8 lg:col-span-2">
@@ -23,7 +22,7 @@ const page = async ({ params }: { params: { id: string } }) => {
               </Button>
             </div>
           </div>
-          <ReportTabContent />
+          <ReportTabContent id={params.id} />
         </Tabs>
       </div>
       <div>

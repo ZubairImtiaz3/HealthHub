@@ -1,3 +1,5 @@
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 import { TabsContent } from "@/components/ui/tabs";
 import {
   Card,
@@ -8,24 +10,19 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const ReportTabContent = () => {
-  const Data = [
-    {
-      id: 1,
-      title: "Annual Checkup",
-      date: "May 15, 2023",
-    },
-    {
-      id: 2,
-      title: "Dental Appointment",
-      date: "June 10, 2023",
-    },
-    {
-      id: 3,
-      title: "Dubai Examination",
-      date: "July 20, 2023",
-    },
-  ];
+const ReportTabContent = async ({ id }: { id: string }) => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: reports, error } = await supabase
+    .from("reports")
+    .select("*")
+    .eq("patient_id", id);
+
+  if (error) {
+    console.error("Error fetching reports:", error);
+    return <div>Error loading reports</div>;
+  }
 
   return (
     <TabsContent value="week">
@@ -33,19 +30,22 @@ const ReportTabContent = () => {
         <CardHeader className="px-7">
           <CardTitle>Reports</CardTitle>
           <CardDescription>
-            You can view all reports of name here.
+            You can view all reports of the selected patient here.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
-            {Data.map(item => (
-              <div key={item.id}>
+            {reports?.map(report => (
+              <div key={report.id}>
                 <Card>
                   <CardHeader className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-medium">{item.title}</h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Dated: {item.date}
+                      <h3 className="text-lg font-medium">
+                        {report.report_title}
+                      </h3>
+                      <p className="text-sm text-center text-gray-500 dark:text-gray-400">
+                        Dated:{" "}
+                        {new Date(report.created_at).toLocaleDateString()}
                       </p>
                     </div>
                     <Button size="sm" variant="outline">
