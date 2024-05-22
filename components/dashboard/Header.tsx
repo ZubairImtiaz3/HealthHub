@@ -87,7 +87,7 @@ const Header = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Reports</BreadcrumbPage>
+            <BreadcrumbPage>Patients</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

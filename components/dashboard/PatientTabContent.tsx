@@ -1,3 +1,5 @@
+import { createClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
 import { TabsContent } from "@/components/ui/tabs";
 import {
   Card,
@@ -8,24 +10,16 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-const PatientTabContent = () => {
-  const Data = [
-    {
-      id: 1,
-      title: "Kamran Imtiaz",
-      date: "May 15, 2023",
-    },
-    {
-      id: 2,
-      title: "Abdullah Imtiaz",
-      date: "June 10, 2023",
-    },
-    {
-      id: 3,
-      title: "Ammar Khawar",
-      date: "July 20, 2023",
-    },
-  ];
+const PatientTabContent = async () => {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { data: patients, error } = await supabase.from("patients").select("*");
+
+  if (error) {
+    console.error("Error fetching patients:", error);
+    return <div>Error loading patients</div>;
+  }
 
   return (
     <TabsContent value="week">
@@ -38,14 +32,17 @@ const PatientTabContent = () => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
-            {Data.map(item => (
-              <div key={item.id}>
+            {patients?.map(patient => (
+              <div key={patient.id}>
                 <Card>
                   <CardHeader className="flex items-center justify-between">
                     <div>
-                      <h3 className="text-lg font-medium">{item.title}</h3>
+                      <h3 className="text-lg font-medium">
+                        {patient.first_name} {patient.last_name}
+                      </h3>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Dated: {item.date}
+                        Dated:{" "}
+                        {new Date(patient.created_at).toLocaleDateString()}
                       </p>
                     </div>
                     <Button size="sm" variant="outline">
