@@ -82,6 +82,7 @@ export function SignUpForm() {
         gender: data?.gender,
         phone_number: data?.mobileNumber,
         date_of_birth: data?.dateOfBirth,
+        email: data?.email,
       });
 
       if (signUpError || profileError) {

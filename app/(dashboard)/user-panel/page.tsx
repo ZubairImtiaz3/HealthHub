@@ -2,7 +2,7 @@ import { File } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import PatientTabContent from "@/components/dashboard/PatientTabContent";
-import RightSide from "@/components/dashboard/RightSide";
+import UserProfile from "@/components/dashboard/UserProfile";
 
 export default function page() {
   return (
@@ -26,7 +26,7 @@ export default function page() {
         </Tabs>
       </div>
       <div>
-        <RightSide />
+        <UserProfile />
       </div>
     </>
   );

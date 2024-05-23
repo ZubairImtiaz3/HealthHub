@@ -5,4 +5,5 @@ export interface SignUpProfile {
   gender: string;
   phone_number: string;
   date_of_birth: Date;
+  email: string;
 }
