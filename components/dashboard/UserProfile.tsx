@@ -32,7 +32,7 @@ const UserProfile = async () => {
         <div className="grid gap-0.5">
           <CardTitle className="group flex items-center gap-2 text-lg">
             <span>
-              Welcome {profile.first_name} {profile.last_name} !
+              Welcome {profile?.first_name} {profile?.last_name} !
             </span>
             <Button
               size="icon"
@@ -43,7 +43,7 @@ const UserProfile = async () => {
               <span className="sr-only">Copy Patient ID</span>
             </Button>
           </CardTitle>
-          <CardDescription>{profile.email}</CardDescription>
+          <CardDescription>{profile?.email}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="p-6 text-sm">
@@ -54,7 +54,7 @@ const UserProfile = async () => {
               <div>
                 <h4 className="text-sm font-medium">Father/Husband Name</h4>
                 <span className="text-muted-foreground">
-                  {profile.father_husband_name}
+                  {profile?.father_husband_name}
                 </span>
               </div>
               <User />
@@ -63,8 +63,8 @@ const UserProfile = async () => {
               <div>
                 <h4 className="text-sm font-medium">Gender</h4>
                 <span className="text-muted-foreground">
-                  {profile.gender.charAt(0).toUpperCase() +
-                    profile.gender.slice(1)}
+                  {profile?.gender.charAt(0).toUpperCase() +
+                    profile?.gender.slice(1)}
                 </span>
               </div>
               <UserSearch />
@@ -73,7 +73,7 @@ const UserProfile = async () => {
               <div>
                 <h4 className="text-sm font-medium">Phone Number</h4>
                 <span className="text-muted-foreground">
-                  {profile.phone_number}
+                  {profile?.phone_number}
                 </span>
               </div>
               <Phone />
@@ -82,7 +82,7 @@ const UserProfile = async () => {
               <div>
                 <h4 className="text-sm font-medium">Date Of Birth</h4>
                 <span className="text-muted-foreground">
-                  {profile.date_of_birth}
+                  {profile?.date_of_birth}
                 </span>
               </div>
               <Cake />

@@ -1,21 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-import {
-  ChevronLeft,
-  ChevronRight,
-  Copy,
-  Droplet,
-  Gauge,
-  Heart,
-  HeartPulse,
-  Thermometer,
-} from "lucide-react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
+import { Copy, Droplet, Gauge, HeartPulse, Thermometer } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -44,7 +30,7 @@ const PatientProfile = async ({ id }: any) => {
         <div className="grid gap-0.5">
           <CardTitle className="group flex items-center gap-2 text-lg">
             <span>
-              Patient: {patient.first_name} {patient?.last_name}
+              Patient: {patient?.first_name} {patient?.last_name}
             </span>
             <Button
               size="icon"
@@ -56,7 +42,7 @@ const PatientProfile = async ({ id }: any) => {
             </Button>
           </CardTitle>
           <CardDescription>
-            Updated: {new Date(patient.created_at).toLocaleDateString()}
+            Updated: {new Date(patient?.created_at).toLocaleDateString()}
           </CardDescription>
         </div>
       </CardHeader>
