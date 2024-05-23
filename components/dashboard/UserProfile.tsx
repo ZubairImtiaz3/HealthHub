@@ -1,21 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-import {
-  ChevronLeft,
-  ChevronRight,
-  Copy,
-  Droplet,
-  Gauge,
-  Heart,
-  HeartPulse,
-  Thermometer,
-} from "lucide-react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/components/ui/pagination";
+import { Cake, Copy, Phone, User, UserSearch } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -31,18 +17,23 @@ const UserProfile = async () => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data: profiles, error } = await supabase.from("profiles").select("*");
 
-  // console.log(user);
+  if (error) {
+    console.error("Error fetching profile:", error);
+    return <div>Error loading Profile</div>;
+  }
+
+  const profile = profiles ? profiles[0] : null;
 
   return (
     <Card className="overflow-hidden mt-12" x-chunk="dashboard-05-chunk-4">
       <CardHeader className="flex flex-row items-start bg-muted/50">
         <div className="grid gap-0.5">
           <CardTitle className="group flex items-center gap-2 text-lg">
-            <span>Welcome John Doe !</span>
+            <span>
+              Welcome {profile.first_name} {profile.last_name} !
+            </span>
             <Button
               size="icon"
               variant="outline"
@@ -52,45 +43,54 @@ const UserProfile = async () => {
               <span className="sr-only">Copy Patient ID</span>
             </Button>
           </CardTitle>
-          <CardDescription>Updated: May 15, 2024</CardDescription>
+          <CardDescription>{profile.email}</CardDescription>
         </div>
       </CardHeader>
       <CardContent className="p-6 text-sm">
         <div className="grid gap-3">
-          <div className="font-semibold text-lg">Health Metrics</div>
+          <div className="font-semibold text-lg">User Information</div>
           <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-medium">Blood Pressure</h4>
-                <span className="text-muted-foreground">120/80 mmHg</span>
+                <h4 className="text-sm font-medium">Father/Husband Name</h4>
+                <span className="text-muted-foreground">
+                  {profile.father_husband_name}
+                </span>
               </div>
-              <Gauge />
+              <User />
             </li>
             <li className="flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-medium">Heart Rate</h4>
-                <span className="text-muted-foreground">120/80 mmHg</span>
+                <h4 className="text-sm font-medium">Gender</h4>
+                <span className="text-muted-foreground">
+                  {profile.gender.charAt(0).toUpperCase() +
+                    profile.gender.slice(1)}
+                </span>
               </div>
-              <HeartPulse />
+              <UserSearch />
             </li>
             <li className="flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-medium">Body Temperature</h4>
-                <span className="text-muted-foreground">120/80 mmHg</span>
+                <h4 className="text-sm font-medium">Phone Number</h4>
+                <span className="text-muted-foreground">
+                  {profile.phone_number}
+                </span>
               </div>
-              <Thermometer />
+              <Phone />
             </li>
             <li className="flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-medium">Blood Sugar Level</h4>
-                <span className="text-muted-foreground">120/80 mmHg</span>
+                <h4 className="text-sm font-medium">Date Of Birth</h4>
+                <span className="text-muted-foreground">
+                  {profile.date_of_birth}
+                </span>
               </div>
-              <Droplet />
+              <Cake />
             </li>
           </ul>
         </div>
         <Separator className="my-4" />
-        <div className="font-semibold">Doctor&apos;s Notes</div>
+        <div className="font-semibold">Disclamier</div>
         <div className="text-muted-foreground">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
           risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec,
@@ -99,24 +99,8 @@ const UserProfile = async () => {
       </CardContent>
       <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
         <div className="text-xs text-muted-foreground">
-          More Associated Patient
+          Your profile is safe with us.
         </div>
-        <Pagination className="ml-auto mr-0 w-auto">
-          <PaginationContent>
-            <PaginationItem>
-              <Button size="icon" variant="outline" className="h-6 w-6">
-                <ChevronLeft className="h-3.5 w-3.5" />
-                <span className="sr-only">Previous Patient</span>
-              </Button>
-            </PaginationItem>
-            <PaginationItem>
-              <Button size="icon" variant="outline" className="h-6 w-6">
-                <ChevronRight className="h-3.5 w-3.5" />
-                <span className="sr-only">Next Patient</span>
-              </Button>
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
       </CardFooter>
     </Card>
   );
