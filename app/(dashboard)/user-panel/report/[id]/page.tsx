@@ -1,7 +1,7 @@
 import { File } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import RightSide from "@/components/dashboard/RightSide";
+import PatientProfile from "@/components/dashboard/RightSide";
 import ReportTabContent from "@/components/dashboard/ReportTabContent";
 
 const page = ({ params }: { params: { id: string } }) => {
@@ -26,7 +26,7 @@ const page = ({ params }: { params: { id: string } }) => {
         </Tabs>
       </div>
       <div>
-        <RightSide />
+        <PatientProfile id={params.id} />
       </div>
     </>
   );
