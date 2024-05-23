@@ -1,7 +1,7 @@
 import { File } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import PatientProfile from "@/components/dashboard/RightSide";
+import PatientProfile from "@/components/dashboard/PatientProfile";
 import ReportTabContent from "@/components/dashboard/ReportTabContent";
 
 const page = ({ params }: { params: { id: string } }) => {
