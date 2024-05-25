@@ -32,24 +32,30 @@ const PatientTabContent = async () => {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col gap-6">
-            {patients?.map(patient => (
-              <div key={patient.id}>
-                <Card>
-                  <CardHeader className="flex items-center justify-between">
-                    <div>
-                      <h3 className="text-lg font-medium">
-                        {patient.first_name} {patient.last_name}
-                      </h3>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Dated:{" "}
-                        {new Date(patient.created_at).toLocaleDateString()}
-                      </p>
-                    </div>
-                    <ViewReportsBtn id={patient.id} />
-                  </CardHeader>
-                </Card>
-              </div>
-            ))}
+            {patients.length > 0 ? (
+              patients.map(patient => (
+                <div key={patient.id}>
+                  <Card>
+                    <CardHeader className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-medium">
+                          {patient.first_name} {patient.last_name}
+                        </h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                          Dated:{" "}
+                          {new Date(patient.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <ViewReportsBtn id={patient.id} />
+                    </CardHeader>
+                  </Card>
+                </div>
+              ))
+            ) : (
+              <h3 className="text-center font-semibold">
+                No patients record found for you right now.
+              </h3>
+            )}
           </div>
         </CardContent>
       </Card>
