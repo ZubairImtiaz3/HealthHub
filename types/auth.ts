@@ -3,7 +3,7 @@ export interface SignUpProfile {
   last_name: string;
   father_husband_name: string;
   gender: string;
-  phone_number: string;
+  phone_number?: string;
   date_of_birth: Date;
-  email: string;
+  email?: string;
 }
