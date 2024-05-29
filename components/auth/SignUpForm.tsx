@@ -124,25 +124,23 @@ export function SignUpForm() {
           )}
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4 items-baseline">
-        <div className="grid gap-2">
-          <Label htmlFor="gender">Gender</Label>
-          <Select onValueChange={handleValueChange}>
-            <SelectTrigger id="gender" aria-label="Select Gender">
-              <SelectValue placeholder="Select Gender" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="male">Male</SelectItem>
-              <SelectItem value="female">Female</SelectItem>
-            </SelectContent>
-          </Select>
-          {errors.gender && (
-            <span className="text-red-500 text-sm">
-              {errors.gender.message}
-            </span>
-          )}
-        </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="gender">Gender</Label>
+        <Select onValueChange={handleValueChange}>
+          <SelectTrigger id="gender" aria-label="Select Gender">
+            <SelectValue placeholder="Select Gender" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="male">Male</SelectItem>
+            <SelectItem value="female">Female</SelectItem>
+          </SelectContent>
+        </Select>
+        {errors.gender && (
+          <span className="text-red-500 text-sm">{errors.gender.message}</span>
+        )}
       </div>
+
       <div className="grid gap-2 items-baseline">
         <Label htmlFor="mobileNumber">Phone Number</Label>
         <Input
