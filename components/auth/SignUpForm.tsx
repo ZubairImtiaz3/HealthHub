@@ -24,22 +24,18 @@ import { Icons } from "@/components/ui/icons";
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
   lastName: yup.string().required("Last Name is required"),
-  fatherOrHusbandName: yup.string().required("F/H Name is required"),
   gender: yup.string().required("Gender is required"),
   mobileNumber: yup.string().required("Phone Number is required"),
   email: yup.string().email("Invalid email").required("Email is required"),
-  dateOfBirth: yup.date().required("Date of Birth is required"),
   password: yup.string().required("Password is required"),
 });
 
 interface FormData {
   firstName: string;
   lastName: string;
-  fatherOrHusbandName: string;
   gender: string;
   mobileNumber: string;
   email: string;
-  dateOfBirth: Date;
   password: string;
 }
 
@@ -78,10 +74,8 @@ export function SignUpForm() {
       const { error: profileError } = await SignUpSubmit({
         first_name: data?.firstName,
         last_name: data?.lastName,
-        father_husband_name: data?.fatherOrHusbandName,
         gender: data?.gender,
         phone_number: data?.mobileNumber,
-        date_of_birth: data?.dateOfBirth,
         email: data?.email,
       });
 
@@ -132,19 +126,6 @@ export function SignUpForm() {
       </div>
       <div className="grid grid-cols-2 gap-4 items-baseline">
         <div className="grid gap-2">
-          <Label htmlFor="f/hNAme">Father/Husband Name</Label>
-          <Input
-            id="f/hNAme"
-            placeholder="Martin"
-            {...register("fatherOrHusbandName")}
-          />
-          {errors.fatherOrHusbandName && (
-            <span className="text-red-500 text-sm">
-              {errors.fatherOrHusbandName.message}
-            </span>
-          )}
-        </div>
-        <div className="grid gap-2">
           <Label htmlFor="gender">Gender</Label>
           <Select onValueChange={handleValueChange}>
             <SelectTrigger id="gender" aria-label="Select Gender">
@@ -186,13 +167,6 @@ export function SignUpForm() {
         />
         {errors.email && (
           <span className="text-red-500 text-sm">{errors.email.message}</span>
-        )}
-      </div>
-      <div className="grid gap-2 items-baseline">
-        <Label htmlFor="date">Date Of Birth</Label>
-        <Input id="date" type="date" {...register("dateOfBirth")} />
-        {errors.dateOfBirth && (
-          <span className="text-red-500 text-sm">{"DOB is required"}</span>
         )}
       </div>
       <div className="grid gap-2 items-baseline">
