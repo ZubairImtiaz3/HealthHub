@@ -52,15 +52,6 @@ const UserProfile = async () => {
           <ul className="grid gap-3">
             <li className="flex items-center justify-between">
               <div>
-                <h4 className="text-sm font-medium">Father/Husband Name</h4>
-                <span className="text-muted-foreground">
-                  {profile?.father_husband_name}
-                </span>
-              </div>
-              <User />
-            </li>
-            <li className="flex items-center justify-between">
-              <div>
                 <h4 className="text-sm font-medium">Gender</h4>
                 <span className="text-muted-foreground">
                   {profile?.gender.charAt(0).toUpperCase() +
