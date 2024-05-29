@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import ViewReportBtn from "@/components/dashboard/ViewReportBtn";
 
 const ReportTabContent = async ({ id }: { id: string }) => {
   const cookieStore = cookies();
@@ -23,6 +23,8 @@ const ReportTabContent = async ({ id }: { id: string }) => {
     console.error("Error fetching reports:", error);
     return <div>Error loading reports</div>;
   }
+
+  console.log("Reports:", reports);
 
   return (
     <TabsContent value="week">
@@ -48,9 +50,7 @@ const ReportTabContent = async ({ id }: { id: string }) => {
                         {new Date(report.created_at).toLocaleDateString()}
                       </p>
                     </div>
-                    <Button size="sm" variant="outline">
-                      View Report
-                    </Button>
+                    <ViewReportBtn reportLink={report.report_link} />
                   </CardHeader>
                 </Card>
               </div>

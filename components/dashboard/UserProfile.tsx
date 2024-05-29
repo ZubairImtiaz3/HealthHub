@@ -78,15 +78,6 @@ const UserProfile = async () => {
               </div>
               <Phone />
             </li>
-            <li className="flex items-center justify-between">
-              <div>
-                <h4 className="text-sm font-medium">Date Of Birth</h4>
-                <span className="text-muted-foreground">
-                  {profile?.date_of_birth}
-                </span>
-              </div>
-              <Cake />
-            </li>
           </ul>
         </div>
         <Separator className="my-4" />
