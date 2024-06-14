@@ -1,12 +1,10 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const ViewReports = () => {
   return (
-    <section
-      id="reports"
-      className="w-full bg-gray-100 py-12 md:py-24 lg:py-32 dark:bg-gray-800"
-    >
+    <section id="reports" className="w-full py-12 md:py-24 lg:py-32">
       <div className="container px-4 md:px-6">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12">
           <div className="flex items-center justify-center">
@@ -27,7 +25,9 @@ const ViewReports = () => {
               documents securely online.
             </p>
             <div className="mt-6">
-              <Button>View Reports</Button>
+              <Link href="/user-panel">
+                <Button>View Reports</Button>
+              </Link>
             </div>
           </div>
         </div>
