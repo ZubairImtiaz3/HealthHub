@@ -12,12 +12,18 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { checkAuth } from "@/utils/supabase/session";
 
 const UserProfile = async () => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const { data: profiles, error } = await supabase.from("profiles").select("*");
+  const session = await checkAuth();
+
+  const { data: profiles, error } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", session?.user?.id);
 
   if (error) {
     console.error("Error fetching profile:", error);
