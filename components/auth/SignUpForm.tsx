@@ -63,7 +63,10 @@ export function SignUpForm() {
     setIsLoading(true);
 
     try {
-      const { error: signUpError } = await supabase.auth.signUp({
+      const {
+        data: { user },
+        error: signUpError,
+      } = await supabase.auth.signUp({
         email: data?.email,
         password: data?.password,
         // options: {
@@ -71,7 +74,19 @@ export function SignUpForm() {
         // },
       });
 
+      if (signUpError) {
+        toast({
+          title: "Something Went Wrong.",
+          description: signUpError.message,
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      const userId = user ? user.id : "";
+
       const { error: profileError } = await SignUpSubmit({
+        id: userId,
         first_name: data?.firstName,
         last_name: data?.lastName,
         gender: data?.gender,
@@ -79,14 +94,14 @@ export function SignUpForm() {
         email: data?.email,
       });
 
-      if (signUpError || profileError) {
+      if (profileError) {
         toast({
           title: "Something Went Wrong.",
-          description: signUpError?.message || profileError?.message,
+          description: profileError.message,
         });
       } else {
         toast({
-          title: "Account Register Successfully.",
+          title: "Account Registered Successfully.",
           description: "Redirecting to your Dashboard",
         });
         router.push("/user-panel");
@@ -94,7 +109,7 @@ export function SignUpForm() {
 
       setIsLoading(false);
     } catch (error) {
-      console.log("error", error);
+      setIsLoading(false);
     }
   };
 

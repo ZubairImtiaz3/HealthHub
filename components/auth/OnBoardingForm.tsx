@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { SignUpSubmit } from "@/actions/signUp";
 import { useState } from "react";
 import { Icons } from "@/components/ui/icons";
+import { checkAuth } from "@/utils/supabase/session";
 
 const schema = yup.object().shape({
   firstName: yup.string().required("First Name is required"),
@@ -55,9 +56,12 @@ export const OnBoardingForm = ({ userEmail }: any) => {
   };
 
   const onSubmit = async (data: FormData) => {
+    const user = await checkAuth();
+
     setIsLoading(true);
     try {
       const { error: profileError } = await SignUpSubmit({
+        id: user?.id,
         first_name: data?.firstName,
         last_name: data?.lastName,
         gender: data?.gender,

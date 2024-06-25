@@ -16,7 +16,7 @@ export async function AuthTemplate({
   children,
 }: Props) {
   const session = await checkAuth();
-  if (session?.access_token) {
+  if (session) {
     redirect("/user-panel");
   }
 

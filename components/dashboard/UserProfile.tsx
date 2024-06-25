@@ -18,12 +18,12 @@ const UserProfile = async () => {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  const session = await checkAuth();
+  const user = await checkAuth();
 
   const { data: profiles, error } = await supabase
     .from("profiles")
     .select("*")
-    .eq("id", session?.user?.id);
+    .eq("id", user?.id);
 
   if (error) {
     console.error("Error fetching profile:", error);
