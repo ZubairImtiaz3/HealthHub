@@ -80,9 +80,11 @@ const UserProfile = async () => {
         <Separator className="my-4" />
         <div className="font-semibold">Disclamier</div>
         <div className="text-muted-foreground">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
-          risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec,
-          ultricies sed, dolor.
+          This patient information or report cannot be used against the person
+          in court or any legal proceedings to avoid any misuse. <br /> <br />
+          All medical data is confidential and protected under applicable
+          privacy laws. Any unauthorized use or disclosure of this information
+          is strictly prohibited.
         </div>
       </CardContent>
       <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">

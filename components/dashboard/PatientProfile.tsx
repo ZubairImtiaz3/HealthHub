@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 
-import { Copy, Droplet, Gauge, HeartPulse, Thermometer } from "lucide-react";
+import { Copy } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -47,50 +47,20 @@ const PatientProfile = async ({ id }: any) => {
         </div>
       </CardHeader>
       <CardContent className="p-6 text-sm">
-        <div className="grid gap-3">
-          <div className="font-semibold text-lg">Health Metrics</div>
-          <ul className="grid gap-3">
-            <li className="flex items-center justify-between">
-              <div>
-                <h4 className="text-sm font-medium">Blood Pressure</h4>
-                <span className="text-muted-foreground">120/80 mmHg</span>
-              </div>
-              <Gauge />
-            </li>
-            <li className="flex items-center justify-between">
-              <div>
-                <h4 className="text-sm font-medium">Heart Rate</h4>
-                <span className="text-muted-foreground">120/80 mmHg</span>
-              </div>
-              <HeartPulse />
-            </li>
-            <li className="flex items-center justify-between">
-              <div>
-                <h4 className="text-sm font-medium">Body Temperature</h4>
-                <span className="text-muted-foreground">120/80 mmHg</span>
-              </div>
-              <Thermometer />
-            </li>
-            <li className="flex items-center justify-between">
-              <div>
-                <h4 className="text-sm font-medium">Blood Sugar Level</h4>
-                <span className="text-muted-foreground">120/80 mmHg</span>
-              </div>
-              <Droplet />
-            </li>
-          </ul>
-        </div>
-        <Separator className="my-4" />
-        <div className="font-semibold">Doctor&apos;s Notes</div>
+        <div className="font-semibold">Important Note</div>
         <div className="text-muted-foreground">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non
-          risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec,
-          ultricies sed, dolor.
+          <div className="text-muted-foreground">
+            This patient information or report cannot be used against the person
+            in court or any legal proceedings to avoid any misuse. <br /> <br />
+            All medical data is confidential and protected under applicable
+            privacy laws. Any unauthorized use or disclosure of this information
+            is strictly prohibited.
+          </div>
         </div>
       </CardContent>
       <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
         <div className="text-xs text-muted-foreground">
-          Patient Profile is safe with us.
+          Patient reports are safe with us.
         </div>
       </CardFooter>
     </Card>

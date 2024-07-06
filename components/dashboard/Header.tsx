@@ -10,7 +10,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Home, PanelLeft, Users2 } from "lucide-react";
+import { Home, PanelLeft } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -24,7 +24,7 @@ import signOut from "@/actions/signOut";
 import { toast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 
-const Header = () => {
+const Header = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -67,14 +67,6 @@ const Header = () => {
               <Home className="h-5 w-5 transition-all group-hover:scale-110" />
               <span className="sr-only">Dashboard</span>
             </Link>
-
-            <Link
-              href="#"
-              className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-            >
-              <Users2 className="h-5 w-5" />
-              Patients
-            </Link>
           </nav>
         </SheetContent>
       </Sheet>
@@ -92,26 +84,11 @@ const Header = () => {
         </BreadcrumbList>
       </Breadcrumb>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="overflow-hidden rounded-full"
-          >
-            <Image
-              src="/placeholder.svg"
-              width={36}
-              height={36}
-              alt="Avatar"
-              className="overflow-hidden rounded-full"
-            />
-          </Button>
-        </DropdownMenuTrigger>
+        {children}
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Settings</DropdownMenuItem>
-          <DropdownMenuItem>Support</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={handleSignOut}>Logout</DropdownMenuItem>
         </DropdownMenuContent>
