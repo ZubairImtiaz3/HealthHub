@@ -40,23 +40,29 @@ export function LoginForm() {
   const onSubmit = async (data: FormData) => {
     setIsLoading(true);
 
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data: user, error } = await supabase.auth.signInWithPassword({
       email: data?.email,
       password: data?.password,
     });
 
-    if (!error) {
-      toast({
-        title: "Login Successfully.",
-        description: "Redirecting to your Dashboard",
-      });
-      router.push("/user-panel");
-    } else {
-      toast({
-        title: "Something Went Wrong.",
-        description: error.message,
-      });
-    }
+     const { data: role } = await supabase
+       .from("profiles")
+       .select("role")
+       .eq("id", user.user?.id)
+       .single();
+
+     if (!error && role?.role === "user") {
+       toast({
+         title: "Login Successfully.",
+         description: "Redirecting to your Dashboard",
+       });
+       router.push("/user-panel");
+     } else {
+       toast({
+         title: "Something Went Wrong.",
+         description: "Unable to login at this time",
+       });
+     }
     setIsLoading(false);
   };
 

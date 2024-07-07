@@ -1,12 +1,12 @@
-import { createServerClient, type CookieOptions } from "@supabase/ssr";
-import { type NextRequest, NextResponse } from "next/server";
+import signOut from '@/actions/signOut';
+import { createServerClient, type CookieOptions } from '@supabase/ssr';
+import { NextResponse, type NextRequest } from 'next/server';
 
-export const createClient = (request: NextRequest) => {
-  // Create an unmodified response
+export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {
-      headers: request.headers,
-    },
+      headers: request.headers
+    }
   });
 
   const supabase = createServerClient(
@@ -18,44 +18,66 @@ export const createClient = (request: NextRequest) => {
           return request.cookies.get(name)?.value;
         },
         set(name: string, value: string, options: CookieOptions) {
-          // If the cookie is updated, update the cookies for the request and response
           request.cookies.set({
             name,
             value,
-            ...options,
+            ...options
           });
           response = NextResponse.next({
             request: {
-              headers: request.headers,
-            },
+              headers: request.headers
+            }
           });
           response.cookies.set({
             name,
             value,
-            ...options,
+            ...options
           });
         },
         remove(name: string, options: CookieOptions) {
-          // If the cookie is removed, update the cookies for the request and response
           request.cookies.set({
             name,
-            value: "",
-            ...options,
+            value: '',
+            ...options
           });
           response = NextResponse.next({
             request: {
-              headers: request.headers,
-            },
+              headers: request.headers
+            }
           });
           response.cookies.set({
             name,
-            value: "",
-            ...options,
+            value: '',
+            ...options
           });
-        },
-      },
-    },
+        }
+      }
+    }
   );
 
-  return { supabase, response };
-};
+  const user = await supabase.auth.getUser();
+
+  const { data: role } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', user.data.user?.id)
+    .single();
+
+  // Restrict routes based on role
+  if (
+    (role?.role === 'admin' || role?.role === 'superadmin') &&
+    request.nextUrl.pathname.startsWith('/user-panel')
+  ) {
+    await signOut();
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  if (request.nextUrl.pathname === '/reset-password') {
+    const token = request.nextUrl.searchParams.get('code');
+    if (!token) {
+      return NextResponse.redirect(new URL('/forgot-password', request.url));
+    }
+  }
+
+  return response;
+}
