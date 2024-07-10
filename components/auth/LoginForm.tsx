@@ -60,7 +60,7 @@ export function LoginForm() {
     } else {
       toast({
         title: "Something Went Wrong.",
-        description: "Unable to login at this time",
+        description: error?.message || "Unable to login at this time",
       });
     }
     setIsLoading(false);
