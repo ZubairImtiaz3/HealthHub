@@ -1,12 +1,12 @@
-import signOut from '@/actions/signOut';
-import { createServerClient, type CookieOptions } from '@supabase/ssr';
-import { NextResponse, type NextRequest } from 'next/server';
+import signOut from "@/actions/signOut";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {
-      headers: request.headers
-    }
+      headers: request.headers,
+    },
   });
 
   const supabase = createServerClient(
@@ -21,61 +21,61 @@ export async function updateSession(request: NextRequest) {
           request.cookies.set({
             name,
             value,
-            ...options
+            ...options,
           });
           response = NextResponse.next({
             request: {
-              headers: request.headers
-            }
+              headers: request.headers,
+            },
           });
           response.cookies.set({
             name,
             value,
-            ...options
+            ...options,
           });
         },
         remove(name: string, options: CookieOptions) {
           request.cookies.set({
             name,
-            value: '',
-            ...options
+            value: "",
+            ...options,
           });
           response = NextResponse.next({
             request: {
-              headers: request.headers
-            }
+              headers: request.headers,
+            },
           });
           response.cookies.set({
             name,
-            value: '',
-            ...options
+            value: "",
+            ...options,
           });
-        }
-      }
-    }
+        },
+      },
+    },
   );
 
   const user = await supabase.auth.getUser();
 
   const { data: role } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.data.user?.id)
+    .from("profiles")
+    .select("role")
+    .eq("id", user.data.user?.id)
     .single();
 
   // Restrict routes based on role
   if (
-    (role?.role === 'admin' || role?.role === 'superadmin') &&
-    request.nextUrl.pathname.startsWith('/user-panel')
+    (role?.role === "admin" || role?.role === "superadmin") &&
+    request.nextUrl.pathname.startsWith("/user-panel")
   ) {
     await signOut();
-    return NextResponse.redirect(new URL('/login', request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  if (request.nextUrl.pathname === '/reset-password') {
-    const token = request.nextUrl.searchParams.get('code');
+  if (request.nextUrl.pathname === "/reset-password") {
+    const token = request.nextUrl.searchParams.get("code");
     if (!token) {
-      return NextResponse.redirect(new URL('/forgot-password', request.url));
+      return NextResponse.redirect(new URL("/forgot-password", request.url));
     }
   }
 

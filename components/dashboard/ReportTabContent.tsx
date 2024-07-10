@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { TabsContent } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -44,18 +43,18 @@ const ReportTabContent = async ({ id }: { id: string }) => {
                 <CardHeader className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-medium text-center">
-                      {report.report_title}
+                      {report?.report_title}
                     </h3>
                     <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-                      Report By: ({report.admins.admin_type}){" "}
-                      {report.admins.profiles.first_name}{" "}
-                      {report.admins.profiles.last_name}
+                      Report By: ({report.admins?.admin_type}){" "}
+                      {report.admins?.profiles.first_name}{" "}
+                      {report.admins?.profiles.last_name}
                     </p>
                     <p className="text-sm text-center text-gray-500 dark:text-gray-400">
-                      Dated: {new Date(report.created_at).toLocaleDateString()}
+                      Dated: {new Date(report?.created_at).toLocaleDateString()}
                     </p>
                   </div>
-                  <ViewReportBtn reportLink={report.report_link} />
+                  <ViewReportBtn reportLink={report?.report_link} />
                 </CardHeader>
               </Card>
             </div>

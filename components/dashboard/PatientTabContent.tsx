@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
-import { TabsContent } from "@/components/ui/tabs";
 import {
   Card,
   CardContent,
@@ -42,16 +41,16 @@ const PatientTabContent = async () => {
                   <CardHeader className="flex items-center justify-between">
                     <div className="text-center">
                       <h3 className="text-lg font-medium">
-                        {patient.first_name} {patient.last_name}
+                        {patient?.first_name} {patient?.last_name}
                       </h3>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        Created By: ({patient.admins.admin_type}){" "}
-                        {patient.admins.profiles.first_name}{" "}
-                        {patient.admins.profiles.last_name}
+                        Created By: ({patient.admins?.admin_type}){" "}
+                        {patient.admins?.profiles?.first_name}{" "}
+                        {patient.admins?.profiles?.last_name}
                       </p>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
                         Dated:{" "}
-                        {new Date(patient.created_at).toLocaleDateString()}
+                        {new Date(patient?.created_at).toLocaleDateString()}
                       </p>
                     </div>
                     <ViewReportsBtn id={patient.id} />

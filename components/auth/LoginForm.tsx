@@ -45,24 +45,24 @@ export function LoginForm() {
       password: data?.password,
     });
 
-     const { data: role } = await supabase
-       .from("profiles")
-       .select("role")
-       .eq("id", user.user?.id)
-       .single();
+    const { data: role } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.user?.id)
+      .single();
 
-     if (!error && role?.role === "user") {
-       toast({
-         title: "Login Successfully.",
-         description: "Redirecting to your Dashboard",
-       });
-       router.push("/user-panel");
-     } else {
-       toast({
-         title: "Something Went Wrong.",
-         description: "Unable to login at this time",
-       });
-     }
+    if (!error && role?.role === "user") {
+      toast({
+        title: "Login Successfully.",
+        description: "Redirecting to your Dashboard",
+      });
+      router.push("/user-panel");
+    } else {
+      toast({
+        title: "Something Went Wrong.",
+        description: "Unable to login at this time",
+      });
+    }
     setIsLoading(false);
   };
 
